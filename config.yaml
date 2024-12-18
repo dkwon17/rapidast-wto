@@ -1,0 +1,42 @@
+config:
+    # WARNING: `configVersion` indicates the schema version of the config file.
+    # This value tells RapiDAST what schema should be used to read this configuration.
+    # Therefore you should only change it if you update the configuration to a newer schema
+    # It is intended to keep backward compatibility (newer RapiDAST running an older config)
+ 
+    configVersion: 4
+ 
+# `application` contains data related to the application, not to the scans.
+application:
+  shortName: "ocptest"
+  url: <API SERVER URL>  # to be replaced with your cluster API server URL
+ 
+general:
+    authentication:
+        type: "http_header"
+        parameters:
+            name: "Authorization"
+            value: <TOKEN>
+    container:
+        # currently supported: `podman` and `none`
+        type: "none"
+ 
+scanners:
+    zap_devworkspaceoperatorconfigs:
+        apiScan:
+            apis:
+                apiUrl: "<API SERVER URL>/openapi/v3/apis/controller.devfile.io/v1alpha1"
+        activeScan:
+           policy: "Kubernetes-API-scan"
+    zap_v1alpha2_devworkspaces:
+        apiScan:
+            apis:
+                apiUrl: "<API SERVER URL>/openapi/v3/apis/workspace.devfile.io/v1alpha2"
+        activeScan:
+           policy: "Kubernetes-API-scan"
+    zap_v1alpha1_devworkspaces:
+        apiScan:
+            apis:
+                apiUrl: "<API SERVER URL>/openapi/v3/apis/workspace.devfile.io/v1alpha1"
+        activeScan:
+           policy: "Kubernetes-API-scan"
